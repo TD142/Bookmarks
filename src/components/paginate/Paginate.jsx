@@ -2,15 +2,18 @@ import { useState } from "react";
 
 const Paginate = ({ bookmarks }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(6);
+  const [bookmarksPerPage] = useState(20);
 
-  const lastPostIndex = currentPage * postsPerPage;
+  const lastBookmarkIndex = currentPage * bookmarksPerPage;
 
-  const firstPostIndex = lastPostIndex - postsPerPage;
+  const firstBookmarkIndex = lastBookmarkIndex - bookmarksPerPage;
 
-  const currentBookmarks = bookmarks.slice(firstPostIndex, lastPostIndex);
+  const currentBookmarks = bookmarks.slice(
+    firstBookmarkIndex,
+    lastBookmarkIndex
+  );
 
-  const totalPages = Math.ceil(currentBookmarks.length / postsPerPage);
+  const totalPages = Math.ceil(currentBookmarks.length / bookmarksPerPage);
 
   const pageNumbers = [];
 

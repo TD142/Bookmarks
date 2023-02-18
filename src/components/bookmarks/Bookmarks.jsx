@@ -14,9 +14,7 @@ const Bookmarks = () => {
     }
   });
   const [inputValue, setInputValue] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(6);
-
+  const [errors, setErrors] = useState("");
   useEffect(() => {
     localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
   }, [bookmarks]);
@@ -24,19 +22,29 @@ const Bookmarks = () => {
   const handleFormSubmit = (event) => {
     event.preventDefault();
 
+    setErrors("");
+
     if (inputValue.length) {
       if (isValidHttpUrl(inputValue)) {
-        fetch(inputValue, { mode: "no-cors" }).then((resolve) => {
-          setBookmarks((prevBookmarks) => [
-            ...prevBookmarks,
-            {
-              id: bookmarks.length + 1,
-              text: inputValue,
-            },
-          ]);
-        });
+        fetch(inputValue, { mode: "no-cors" })
+          .then((resolve) => {
+            setBookmarks((prevBookmarks) => [
+              ...prevBookmarks,
+              {
+                id: bookmarks.length + 1,
+                text: inputValue,
+              },
+            ]);
+          })
+          .catch((err) => {
+            setErrors("Not a live website!");
+          });
       }
+    } else {
+      setErrors("Empty bookmark!");
     }
+
+    setInputValue("");
   };
 
   const handleDeleteClick = (id) => {
@@ -58,6 +66,8 @@ const Bookmarks = () => {
           />
 
           <button>Add</button>
+
+          {errors && <p>{errors}</p>}
         </form>
 
         <div className="bookmarks-list">
