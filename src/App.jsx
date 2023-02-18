@@ -1,5 +1,5 @@
 import "./App.css";
-import Bookmarks from "./components/Bookmarks";
+import Bookmarks from "./components/bookmarks/Bookmarks";
 
 function App() {
   return (

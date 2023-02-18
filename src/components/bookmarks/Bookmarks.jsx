@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { isValidHttpUrl, doesURLExist } from "../utils/functions";
+import { isValidHttpUrl } from "../../utils/functions";
+import Paginate from "../paginate/Paginate";
 
 const Bookmarks = () => {
   const [bookmarks, setBookmarks] = useState(() => {
@@ -12,8 +13,9 @@ const Bookmarks = () => {
       return [];
     }
   });
-
   const [inputValue, setInputValue] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(6);
 
   useEffect(() => {
     localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
@@ -78,6 +80,7 @@ const Bookmarks = () => {
         >
           Clear Bookmarks
         </button>
+        <Paginate bookmarks={bookmarks} />
       </section>
     </div>
   );
