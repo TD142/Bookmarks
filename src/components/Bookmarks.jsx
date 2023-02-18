@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import isValidHttpUrl from "../utils/functions";
+import { isValidHttpUrl, doesURLExist } from "../utils/functions";
 
 const Bookmarks = () => {
   const [bookmarks, setBookmarks] = useState(() => {
@@ -24,13 +24,15 @@ const Bookmarks = () => {
 
     if (inputValue.length) {
       if (isValidHttpUrl(inputValue)) {
-        setBookmarks((prevBookmarks) => [
-          ...prevBookmarks,
-          {
-            id: bookmarks.length + 1,
-            text: inputValue,
-          },
-        ]);
+        fetch(inputValue, { mode: "no-cors" }).then((resolve) => {
+          setBookmarks((prevBookmarks) => [
+            ...prevBookmarks,
+            {
+              id: bookmarks.length + 1,
+              text: inputValue,
+            },
+          ]);
+        });
       }
     }
   };
