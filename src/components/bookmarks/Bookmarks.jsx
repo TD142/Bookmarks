@@ -4,6 +4,10 @@ import { isValidHttpUrl } from "../../utils/functions";
 import Paginate from "../paginate/Paginate";
 
 const Bookmarks = () => {
+  const [inputValue, setInputValue] = useState("");
+  const [currentBookmark, setCurrentBookmark] = useState({});
+  const [errors, setErrors] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
   const [bookmarks, setBookmarks] = useState(() => {
     const savedBookmarks = localStorage.getItem("bookmarks");
 
@@ -13,11 +17,36 @@ const Bookmarks = () => {
       return [];
     }
   });
-  const [inputValue, setInputValue] = useState("");
-  const [errors, setErrors] = useState("");
+
+  const ValidationCheck = (input, callback, valueCheck) => {
+    if (valueCheck) {
+      if (isValidHttpUrl(input.text)) {
+        fetch(input.text, { mode: "no-cors" })
+          .then((resolve) => {
+            callback();
+          })
+          .catch((err) => {
+            setErrors("Not a live website!");
+          });
+      } else {
+        setErrors("Not a valid url!");
+      }
+    } else {
+      setErrors("Empty bookmark!");
+    }
+  };
+
   useEffect(() => {
     localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
   }, [bookmarks]);
+
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value);
+  };
+
+  const handleEditInputChange = (event) => {
+    setCurrentBookmark({ ...currentBookmark, text: event.target.value });
+  };
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
@@ -33,12 +62,15 @@ const Bookmarks = () => {
               {
                 id: bookmarks.length + 1,
                 text: inputValue,
+                isEditing: false,
               },
             ]);
           })
           .catch((err) => {
             setErrors("Not a live website!");
           });
+      } else {
+        setErrors("Not a valid url!");
       }
     } else {
       setErrors("Empty bookmark!");
@@ -47,21 +79,57 @@ const Bookmarks = () => {
     setInputValue("");
   };
 
+  const handleEditClick = (bookmark) => {
+    setCurrentBookmark({ ...bookmark });
+    setIsEditing(true);
+  };
+
   const handleDeleteClick = (id) => {
     const filteredBookmarks = bookmarks.filter((bookmark) => bookmark.id != id);
     setBookmarks(filteredBookmarks);
   };
+
+  function handleEditFormSubmit(event) {
+    event.preventDefault();
+
+    setErrors("");
+
+    if (currentBookmark.text) {
+      if (isValidHttpUrl(currentBookmark.text)) {
+        fetch(currentBookmark.text, { mode: "no-cors" })
+          .then((resolve) => {
+            handleUpdateBookMark(currentBookmark.id, currentBookmark);
+          })
+          .catch((err) => {
+            setErrors("Not a live website!");
+          });
+      } else {
+        setErrors("Not a valid url!");
+      }
+    } else {
+      setErrors("Empty bookmark!");
+    }
+  }
+
+  function handleUpdateBookMark(id, updatedBookmark) {
+    const updatedItem = bookmarks.map((bookmark) => {
+      return bookmark.id === id ? updatedBookmark : bookmark;
+    });
+
+    setIsEditing(false);
+
+    setBookmarks(updatedItem);
+  }
 
   return (
     <div>
       <section>
         <form onSubmit={handleFormSubmit}>
           <input
+            name="add-bookmark"
             placeholder="Add a Bookmark"
             value={inputValue}
-            onChange={(event) => {
-              setInputValue(event.target.value);
-            }}
+            onChange={handleInputChange}
             type="text"
           />
 
@@ -74,10 +142,32 @@ const Bookmarks = () => {
           {bookmarks.map((bookmark) => {
             return (
               <div key={bookmark.id} className="single-bookmark">
-                <a href={bookmark.text}>{bookmark.text}</a>
-                <button onClick={() => handleDeleteClick(bookmark.id)}>
-                  X
-                </button>
+                {isEditing && currentBookmark.id === bookmark.id ? (
+                  <div>
+                    <form onSubmit={handleEditFormSubmit}>
+                      <input
+                        name="edit-bookmark"
+                        value={currentBookmark.text}
+                        onChange={handleEditInputChange}
+                      />
+                      <button>update</button>
+                    </form>
+                  </div>
+                ) : (
+                  <div>
+                    <a href={bookmark.text}>{bookmark.text}</a>
+                    <button
+                      onClick={() => {
+                        handleEditClick(bookmark);
+                      }}
+                    >
+                      Edit
+                    </button>
+                    <button onClick={() => handleDeleteClick(bookmark.id)}>
+                      X
+                    </button>
+                  </div>
+                )}
               </div>
             );
           })}

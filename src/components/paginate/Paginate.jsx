@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "./paginate.css";
 
 const Paginate = ({ bookmarks }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -13,7 +14,9 @@ const Paginate = ({ bookmarks }) => {
     lastBookmarkIndex
   );
 
-  const totalPages = Math.ceil(currentBookmarks.length / bookmarksPerPage);
+  const totalPages = Math.ceil(bookmarks.length / bookmarksPerPage);
+
+  console.log(currentBookmarks);
 
   const pageNumbers = [];
 
@@ -25,7 +28,7 @@ const Paginate = ({ bookmarks }) => {
     <div className="pagination">
       <p
         className={
-          currentPage > 1 && bookmarks.length > 6
+          currentPage > 1 && bookmarks.length > 20
             ? "pagination__text"
             : "pagination__text--hidden"
         }

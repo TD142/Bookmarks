@@ -1,0 +1,34 @@
+.pagination {
+  margin: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pagination__list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+}
+
+.pagination__list__item {
+  list-style: none;
+  width: fit-content;
+  padding: 0 0.5rem;
+  cursor: pointer;
+  margin-top: 0.1rem;
+}
+
+.pagination__list__item--highlight {
+  text-decoration: underline;
+}
+
+.pagination__text {
+  font-size: 1.5rem;
+  align-self: center;
+  cursor: pointer;
+}
+
+.pagination__text--hidden {
+  visibility: hidden;
+}

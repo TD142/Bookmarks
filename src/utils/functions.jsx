@@ -2,6 +2,7 @@ export const isValidHttpUrl = (string) => {
   let url;
   try {
     url = new URL(string);
+    console.log(url);
   } catch (err) {
     return false;
   }
