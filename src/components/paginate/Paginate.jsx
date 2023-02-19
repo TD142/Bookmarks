@@ -16,8 +16,6 @@ const Paginate = ({ bookmarks }) => {
 
   const totalPages = Math.ceil(bookmarks.length / bookmarksPerPage);
 
-  console.log(currentBookmarks);
-
   const pageNumbers = [];
 
   for (let i = 1; i <= totalPages; i++) {
