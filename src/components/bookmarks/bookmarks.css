@@ -1,26 +1,3 @@
-.edit-bookmark {
-  position: absolute;
+.bookmarks {
   width: 100%;
-  z-index: 999;
-  height: 100%;
-  top: 0;
-  background: #282c34;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
-
-/* top: 50%; */
-
-/* background: white;
-  left: 50%;
-  transform: translateX(-50%); */
-
-/* .edit-bookmark-single {
-  position: absolute;
-  top: 50%;
-  z-index: 999;
-  background: white;
-  left: 50%;
-  transform: translateX(-50%);
-} */

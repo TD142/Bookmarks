@@ -1,0 +1,55 @@
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+
+    top: 20px;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+.edit-bookmark {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+  height: 100%;
+  top: 0;
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.edit-single-bookmark {
+  width: 80%;
+  border: 1px solid white;
+  padding: 1.5rem;
+  animation: fade-in linear 1s;
+}
+
+.edit-single-bookmark > h2 {
+  text-align: center;
+}
+
+.edit-bookmark {
+  margin-bottom: 1.5rem;
+}
+
+.edit-bookmark input {
+  width: 100%;
+  margin: 1.3rem auto;
+  border-radius: 1rem;
+  padding: 0.5rem;
+}
+
+.buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+.buttons > button {
+  width: 50%;
+}

@@ -84,10 +84,13 @@ const Bookmarks = () => {
 
     setIsEditing(true);
   };
-  console.log(currentBookmark);
-  const handleDeleteClick = (id) => {
-    const filteredBookmarks = bookmarks.filter((bookmark) => bookmark.id != id);
-    setBookmarks(filteredBookmarks);
+
+  const handleDeleteClick = () => {
+    const updatedBookmarks = bookmarks.filter(
+      (bookmark, index) => (bookmark.id = index)
+    );
+
+    setBookmarks(updatedBookmarks);
   };
 
   function handleEditFormSubmit(event) {
@@ -127,8 +130,13 @@ const Bookmarks = () => {
     setErrors("");
   };
 
+  const clearBookmarks = (event) => {
+    event.preventDefault();
+    setBookmarks([]);
+  };
+
   return (
-    <main>
+    <main className="bookmarks">
       <AddBookmark
         handleFormSubmit={handleFormSubmit}
         titleInputValue={titleInputValue}
@@ -136,11 +144,13 @@ const Bookmarks = () => {
         handleUrlInputChange={handleUrlInputChange}
         urlInputValue={urlInputValue}
         errors={errors}
+        clearBookmarks={clearBookmarks}
       />
+
       <div className="container">
         {bookmarks.map((bookmark) => {
           return (
-            <div key={bookmark.id} className="single-bookmark">
+            <div key={bookmark.id}>
               {isEditing && currentBookmark.id === bookmark.id ? (
                 <EditBookmark
                   handleEditFormSubmit={handleEditFormSubmit}
@@ -162,13 +172,6 @@ const Bookmarks = () => {
         })}
       </div>
 
-      <button
-        onClick={() => {
-          setBookmarks([]);
-        }}
-      >
-        Clear Bookmarks
-      </button>
       <Paginate bookmarks={bookmarks} />
     </main>
   );

@@ -1,9 +1,12 @@
 import React from "react";
+import BookmarkImg from "../../assets/images/bookmark.png";
+import "./single-bookmark.css";
 
 const SingleBookmark = ({ bookmark, handleEditClick, handleDeleteClick }) => {
   return (
-    <div>
-      <p>{bookmark.title}</p>
+    <div className="single-bookmark">
+      <img src={BookmarkImg} alt="bookmark" />
+      <p>{bookmark.title.toUpperCase()}:</p>
       <a href={bookmark.url}>{bookmark.url}</a>
 
       <button
@@ -13,7 +16,7 @@ const SingleBookmark = ({ bookmark, handleEditClick, handleDeleteClick }) => {
       >
         Edit
       </button>
-      <button onClick={() => handleDeleteClick(bookmark.id)}>X</button>
+      <button onClick={handleDeleteClick}>X</button>
     </div>
   );
 };

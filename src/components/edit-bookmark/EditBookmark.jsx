@@ -1,4 +1,5 @@
 import React from "react";
+import "./EditBookmark.css";
 
 const EditBookmark = ({
   handleEditFormSubmit,
@@ -10,7 +11,8 @@ const EditBookmark = ({
 }) => {
   return (
     <div className="edit-bookmark">
-      <div className="edit-bookmark-single">
+      <div className="edit-single-bookmark">
+        <h2>Edit Bookmark</h2>
         <form onSubmit={handleEditFormSubmit}>
           <p>{errors}</p>
           <input
@@ -23,8 +25,10 @@ const EditBookmark = ({
             value={currentBookmark.url}
             onChange={handleEditUrlChange}
           />
-          <button type="submit">update</button>
-          <button onClick={handleCancelEdit}>Cancel</button>
+          <div className="buttons">
+            <button type="submit">update</button>
+            <button onClick={handleCancelEdit}>Cancel</button>
+          </div>
         </form>
       </div>
     </div>

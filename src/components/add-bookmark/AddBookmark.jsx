@@ -1,4 +1,5 @@
 import React from "react";
+import "./add-bookmark.css";
 
 const AddBookmark = ({
   handleFormSubmit,
@@ -7,28 +8,33 @@ const AddBookmark = ({
   urlInputValue,
   handleUrlInputChange,
   errors,
+  clearBookmarks,
 }) => {
   return (
-    <form onSubmit={handleFormSubmit}>
-      <input
-        name="add-title"
-        placeholder="Add Title"
-        value={titleInputValue}
-        onChange={handleTitleInputChange}
-        type="text"
-      />
-      <input
-        name="add-bookmark"
-        placeholder="Add url"
-        value={urlInputValue}
-        onChange={handleUrlInputChange}
-        type="text"
-      />
-
-      <button type="submit">Add</button>
+    <div className="add-bookmark">
+      <form className="form" onSubmit={handleFormSubmit}>
+        <input
+          name="add-title"
+          placeholder="Add Title"
+          value={titleInputValue}
+          onChange={handleTitleInputChange}
+          type="text"
+        />
+        <input
+          name="add-bookmark"
+          placeholder="Add url"
+          value={urlInputValue}
+          onChange={handleUrlInputChange}
+          type="text"
+        />
+        <div className="buttons">
+          <button type="submit">Add</button>
+          <button onClick={clearBookmarks}>Clear Bookmarks</button>
+        </div>
+      </form>
 
       {errors && <p>{errors}</p>}
-    </form>
+    </div>
   );
 };
 

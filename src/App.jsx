@@ -3,10 +3,11 @@ import Bookmarks from "./components/bookmarks/Bookmarks";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <Bookmarks />
+    <div className="app">
+      <header className="header">
+        <h1>Bookmarks</h1>
       </header>
+      <Bookmarks />
     </div>
   );
 }

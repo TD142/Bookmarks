@@ -4,5 +4,33 @@
   box-sizing: border-box;
 }
 
-.App {
+.app {
+  margin: 1rem;
+}
+
+a {
+  color: white;
+  line-break: anywhere;
+}
+input {
+  display: block;
+}
+
+button {
+  background: teal;
+  color: white;
+  border: none;
+  padding: 0.8rem;
+  border-radius: 2rem;
+  cursor: pointer;
+  display: block;
+}
+
+button:hover {
+  background: darkcyan;
+}
+
+.header {
+  width: fit-content;
+  margin: 0 auto;
 }

@@ -1,0 +1,19 @@
+.add-bookmark {
+  margin-bottom: 1.5rem;
+}
+
+.add-bookmark input {
+  width: 100%;
+  margin: 1.3rem auto;
+  border-radius: 1rem;
+  padding: 0.5rem;
+}
+
+.buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+.buttons > button {
+  width: 50%;
+}

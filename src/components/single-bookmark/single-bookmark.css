@@ -1,0 +1,19 @@
+.single-bookmark {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  /* background: lightgrey; */
+  padding: 1.5rem;
+  border: 1px solid white;
+  margin-bottom: 2rem;
+}
+
+.single-bookmark > p {
+  margin: 0;
+}
+
+.single-bookmark > img {
+  width: 1.5rem;
+  display: block;
+}
