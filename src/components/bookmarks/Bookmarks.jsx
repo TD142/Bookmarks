@@ -1,7 +1,10 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { isValidHttpUrl } from "../../utils/functions";
+import AddBookmark from "../add-bookmark/AddBookmark";
+import EditBookmark from "../edit-bookmark/EditBookmark";
 import Paginate from "../paginate/Paginate";
+import SingleBookmark from "../single-bookmark/SingleBookmark";
 import "./bookmarks.css";
 
 const Bookmarks = () => {
@@ -19,7 +22,7 @@ const Bookmarks = () => {
       return [];
     }
   });
-
+  console.log(currentBookmark);
   useEffect(() => {
     localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
   }, [bookmarks]);
@@ -63,14 +66,6 @@ const Bookmarks = () => {
               },
             ]);
           })
-          .then((responseText) => {
-            const parsedResponse = new window.DOMParser().parseFromString(
-              responseText,
-              "text/html"
-            );
-
-            console.log(parsedResponse.title);
-          })
           .catch((err) => {
             setErrors("Not a live website!");
           });
@@ -85,10 +80,11 @@ const Bookmarks = () => {
   };
 
   const handleEditClick = (bookmark) => {
-    setCurrentBookmark({ ...bookmark });
+    setCurrentBookmark(bookmark);
+
     setIsEditing(true);
   };
-
+  console.log(currentBookmark);
   const handleDeleteClick = (id) => {
     const filteredBookmarks = bookmarks.filter((bookmark) => bookmark.id != id);
     setBookmarks(filteredBookmarks);
@@ -132,85 +128,49 @@ const Bookmarks = () => {
   };
 
   return (
-    <div>
-      <section>
-        <form onSubmit={handleFormSubmit}>
-          <input
-            name="add-title"
-            placeholder="Add Title"
-            value={titleInputValue}
-            onChange={handleTitleInputChange}
-            type="text"
-          />
-          <input
-            name="add-bookmark"
-            placeholder="Add url"
-            value={urlInputValue}
-            onChange={handleUrlInputChange}
-            type="text"
-          />
+    <main>
+      <AddBookmark
+        handleFormSubmit={handleFormSubmit}
+        titleInputValue={titleInputValue}
+        handleTitleInputChange={handleTitleInputChange}
+        handleUrlInputChange={handleUrlInputChange}
+        urlInputValue={urlInputValue}
+        errors={errors}
+      />
+      <div className="container">
+        {bookmarks.map((bookmark) => {
+          return (
+            <div key={bookmark.id} className="single-bookmark">
+              {isEditing && currentBookmark.id === bookmark.id ? (
+                <EditBookmark
+                  handleEditFormSubmit={handleEditFormSubmit}
+                  handleEditUrlChange={handleEditUrlChange}
+                  handleCancelEdit={handCancelEdit}
+                  handleEditTitleChange={handleEditTitleChange}
+                  currentBookmark={currentBookmark}
+                  errors={errors}
+                />
+              ) : (
+                <SingleBookmark
+                  bookmark={bookmark}
+                  handleEditClick={handleEditClick}
+                  handleDeleteClick={handleDeleteClick}
+                />
+              )}
+            </div>
+          );
+        })}
+      </div>
 
-          <button type="submit">Add</button>
-
-          {errors && <p>{errors}</p>}
-        </form>
-
-        <div className="bookmarks-list">
-          {bookmarks.map((bookmark) => {
-            return (
-              <div key={bookmark.id} className="single-bookmark">
-                {isEditing && currentBookmark.id === bookmark.id ? (
-                  <div className="edit-bookmark">
-                    <div className="edit-bookmark-single">
-                      <form onSubmit={handleEditFormSubmit}>
-                        <input
-                          name="edit-url"
-                          value={currentBookmark.title}
-                          onChange={handleEditTitleChange}
-                        />
-                        <input
-                          name="edit-url"
-                          value={currentBookmark.url}
-                          onChange={handleEditUrlChange}
-                        />
-                        <button type="submit">update</button>
-                        <button onClick={handCancelEdit}>Cancel</button>
-                        <p>{errors}</p>
-                      </form>
-                    </div>
-                  </div>
-                ) : (
-                  <div>
-                    <p>{bookmark.title}</p>
-                    <a href={bookmark.url}>{bookmark.url}</a>
-
-                    <button
-                      onClick={() => {
-                        handleEditClick(bookmark);
-                      }}
-                    >
-                      Edit
-                    </button>
-                    <button onClick={() => handleDeleteClick(bookmark.id)}>
-                      X
-                    </button>
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-
-        <button
-          onClick={() => {
-            setBookmarks([]);
-          }}
-        >
-          Clear Bookmarks
-        </button>
-        <Paginate bookmarks={bookmarks} />
-      </section>
-    </div>
+      <button
+        onClick={() => {
+          setBookmarks([]);
+        }}
+      >
+        Clear Bookmarks
+      </button>
+      <Paginate bookmarks={bookmarks} />
+    </main>
   );
 };
 
