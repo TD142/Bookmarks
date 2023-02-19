@@ -111,7 +111,7 @@ const Bookmarks = () => {
     }
   }
 
-  function handleUpdateBookMark(id, updatedBookmark) {
+  const handleUpdateBookMark = (id, updatedBookmark) => {
     const updatedItem = bookmarks.map((bookmark) => {
       return bookmark.id === id ? updatedBookmark : bookmark;
     });
@@ -119,7 +119,12 @@ const Bookmarks = () => {
     setIsEditing(false);
 
     setBookmarks(updatedItem);
-  }
+  };
+
+  const handCancelEdit = () => {
+    setIsEditing(false);
+    setErrors("");
+  };
 
   return (
     <div>
@@ -133,7 +138,7 @@ const Bookmarks = () => {
             type="text"
           />
 
-          <button>Add</button>
+          <button type="submit">Add</button>
 
           {errors && <p>{errors}</p>}
         </form>
@@ -150,7 +155,8 @@ const Bookmarks = () => {
                         value={currentBookmark.text}
                         onChange={handleEditInputChange}
                       />
-                      <button>update</button>
+                      <button type="submit">update</button>
+                      <button onClick={handCancelEdit}>Cancel</button>
                     </form>
                   </div>
                 ) : (
