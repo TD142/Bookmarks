@@ -6,7 +6,7 @@ const SingleBookmark = ({ bookmark, handleEditClick, handleDeleteClick }) => {
   return (
     <div className="single-bookmark">
       <img src={BookmarkImg} alt="bookmark" />
-      <p>{bookmark.title.toUpperCase()}:</p>
+      {bookmark.title && <p>{bookmark.title.toUpperCase()}:</p>}
       <a href={bookmark.url}>{bookmark.url}</a>
 
       <button

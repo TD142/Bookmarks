@@ -6,12 +6,12 @@
 
 .app {
   margin: 1rem;
-  max-width: 1000px;
 }
 
 @media (min-width: 1000px) {
   .app {
     min-width: 701.2px;
+    max-width: 701.2px;
   }
 }
 

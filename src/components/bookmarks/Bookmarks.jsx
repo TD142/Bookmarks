@@ -27,6 +27,8 @@ const Bookmarks = () => {
     }
   });
 
+  const [scrollPosition, setScrollPosition] = useState(null);
+
   useEffect(() => {
     localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
   }, [bookmarks]);
@@ -35,7 +37,7 @@ const Bookmarks = () => {
     seturlInputValue(event.target.value);
     setErrors("");
   };
-
+  console.log(window.scrollY);
   const handleTitleInputChange = (event) => {
     setTitleInputValue(event.target.value);
   };
@@ -66,7 +68,8 @@ const Bookmarks = () => {
                 isEditing: false,
               },
             ]);
-
+            seturlInputValue("");
+            setTitleInputValue("");
             setAdded(true);
             setTimeout(() => {
               setAdded(false);
@@ -81,17 +84,15 @@ const Bookmarks = () => {
     } else {
       setErrors("Empty bookmark!");
     }
-
-    seturlInputValue("");
   };
 
   const handleEditClick = (bookmark) => {
     setCurrentBookmark(bookmark);
-
     setIsEditing(true);
     setErrors("");
-    const body = document.querySelector("body");
+    setScrollPosition(window.scrollY);
     window.scrollTo(0, 0);
+    const body = document.querySelector("body");
     body.classList.add("body--hidden");
   };
 
@@ -138,22 +139,21 @@ const Bookmarks = () => {
     setTimeout(() => {
       setIsEditing(false);
       setUpdated(false);
+      window.scrollTo(0, scrollPosition);
     }, "1000");
 
     setBookmarks(updatedItem);
 
     const body = document.querySelector("body");
-
     body.classList.remove("body--hidden");
   };
 
   const handCancelEdit = () => {
     setIsEditing(false);
-
     setErrors("");
     const body = document.querySelector("body");
-
     body.classList.remove("body--hidden");
+    window.scrollTo(0, scrollPosition);
   };
 
   const clearBookmarks = (event) => {
