@@ -15,6 +15,7 @@ const Bookmarks = () => {
   const [currentBookmark, setCurrentBookmark] = useState({});
   const [errors, setErrors] = useState("");
   const [isEditing, setIsEditing] = useState(false);
+  const [added, setAdded] = useState(false);
   const [updated, setUpdated] = useState(false);
   const [bookmarks, setBookmarks] = useState(() => {
     const savedBookmarks = localStorage.getItem("bookmarks");
@@ -49,15 +50,13 @@ const Bookmarks = () => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-
+    setAdded(false);
     setErrors("");
 
     if (urlInputValue.length) {
       if (isValidHttpUrl(urlInputValue)) {
         await fetch(urlInputValue, { mode: "no-cors" })
           .then((response) => {
-            const test = response.text();
-
             setBookmarks((prevBookmarks) => [
               ...prevBookmarks,
               {
@@ -67,6 +66,11 @@ const Bookmarks = () => {
                 isEditing: false,
               },
             ]);
+
+            setAdded(true);
+            setTimeout(() => {
+              setAdded(false);
+            }, "1500");
           })
           .catch((err) => {
             setErrors("Not a live website!");
@@ -175,6 +179,7 @@ const Bookmarks = () => {
         urlInputValue={urlInputValue}
         errors={errors}
         clearBookmarks={clearBookmarks}
+        added={added}
       />
 
       <div className="container">

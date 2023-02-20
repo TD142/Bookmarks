@@ -9,6 +9,12 @@
   max-width: 1000px;
 }
 
+@media (min-width: 1000px) {
+  .app {
+    min-width: 701.2px;
+  }
+}
+
 h1 {
   letter-spacing: 0.5rem;
   font-weight: 300;
