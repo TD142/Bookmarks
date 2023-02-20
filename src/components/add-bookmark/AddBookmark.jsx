@@ -12,6 +12,7 @@ const AddBookmark = ({
 }) => {
   return (
     <div className="add-bookmark">
+      {errors && <p className="error">{errors}</p>}
       <form className="form" onSubmit={handleFormSubmit}>
         <input
           name="add-title"
@@ -32,8 +33,6 @@ const AddBookmark = ({
           <button onClick={clearBookmarks}>Clear Bookmarks</button>
         </div>
       </form>
-
-      {errors && <p>{errors}</p>}
     </div>
   );
 };

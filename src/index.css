@@ -7,8 +7,24 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-family: monospace;
 }
 
+@media (min-width: 1000px) {
+  body {
+    width: fit-content;
+    margin: auto;
+  }
+}
+
+.body--hidden {
+  overflow: hidden;
+}
+
+.error {
+  color: red;
+  text-align: center;
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;

@@ -8,6 +8,8 @@ import SingleBookmark from "../single-bookmark/SingleBookmark";
 import "./bookmarks.css";
 
 const Bookmarks = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [bookmarksPerPage] = useState(20);
   const [urlInputValue, seturlInputValue] = useState("");
   const [titleInputValue, setTitleInputValue] = useState("");
   const [currentBookmark, setCurrentBookmark] = useState({});
@@ -22,7 +24,7 @@ const Bookmarks = () => {
       return [];
     }
   });
-  console.log(currentBookmark);
+
   useEffect(() => {
     localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
   }, [bookmarks]);
@@ -55,7 +57,6 @@ const Bookmarks = () => {
           .then((response) => {
             const test = response.text();
 
-            console.log(test);
             setBookmarks((prevBookmarks) => [
               ...prevBookmarks,
               {
@@ -83,6 +84,10 @@ const Bookmarks = () => {
     setCurrentBookmark(bookmark);
 
     setIsEditing(true);
+    setErrors("");
+    const body = document.querySelector("body");
+    window.scrollTo(0, 0);
+    body.classList.add("body--hidden");
   };
 
   const handleDeleteClick = () => {
@@ -123,17 +128,35 @@ const Bookmarks = () => {
     setIsEditing(false);
 
     setBookmarks(updatedItem);
+
+    const body = document.querySelector("body");
+
+    body.classList.remove("body--hidden");
   };
 
   const handCancelEdit = () => {
     setIsEditing(false);
     setErrors("");
+    const body = document.querySelector("body");
+
+    body.classList.remove("body--hidden");
   };
 
   const clearBookmarks = (event) => {
     event.preventDefault();
     setBookmarks([]);
   };
+
+  const lastBookmarkIndex = currentPage * bookmarksPerPage;
+
+  const firstBookmarkIndex = lastBookmarkIndex - bookmarksPerPage;
+
+  const currentBookmarks = bookmarks.slice(
+    firstBookmarkIndex,
+    lastBookmarkIndex
+  );
+
+  const totalPages = Math.ceil(bookmarks.length / bookmarksPerPage);
 
   return (
     <main className="bookmarks">
@@ -148,7 +171,7 @@ const Bookmarks = () => {
       />
 
       <div className="container">
-        {bookmarks.map((bookmark) => {
+        {currentBookmarks.map((bookmark) => {
           return (
             <div key={bookmark.id}>
               {isEditing && currentBookmark.id === bookmark.id ? (
@@ -172,7 +195,12 @@ const Bookmarks = () => {
         })}
       </div>
 
-      <Paginate bookmarks={bookmarks} />
+      <Paginate
+        bookmarks={bookmarks}
+        setCurrentPage={setCurrentPage}
+        currentPage={currentPage}
+        totalPages={totalPages}
+      />
     </main>
   );
 };

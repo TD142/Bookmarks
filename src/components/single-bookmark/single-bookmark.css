@@ -17,3 +17,7 @@
   width: 1.5rem;
   display: block;
 }
+
+.single-bookmark > a {
+  flex: 1;
+}

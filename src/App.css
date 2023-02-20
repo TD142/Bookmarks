@@ -6,6 +6,19 @@
 
 .app {
   margin: 1rem;
+  max-width: 1000px;
+}
+
+h1 {
+  letter-spacing: 0.5rem;
+  font-weight: 300;
+  font-style: italic;
+}
+
+h2 {
+  letter-spacing: 0.2rem;
+  font-weight: 300;
+  /* font-style: italic; */
 }
 
 a {
@@ -14,20 +27,28 @@ a {
 }
 input {
   display: block;
+  font-family: monospace;
+  border: 1px solid white;
+}
+
+input:focus {
+  outline: none;
 }
 
 button {
-  background: teal;
+  background: transparent;
+  border: 1px solid;
   color: white;
-  border: none;
+  border: 1px solid white;
   padding: 0.8rem;
   border-radius: 2rem;
   cursor: pointer;
   display: block;
+  font-family: monospace;
 }
 
 button:hover {
-  background: darkcyan;
+  background: rgba(37, 36, 36, 0.5);
 }
 
 .header {

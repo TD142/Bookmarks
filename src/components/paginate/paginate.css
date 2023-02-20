@@ -27,6 +27,7 @@
   font-size: 1.5rem;
   align-self: center;
   cursor: pointer;
+  visibility: visible;
 }
 
 .pagination__text--hidden {

@@ -14,7 +14,7 @@ const EditBookmark = ({
       <div className="edit-single-bookmark">
         <h2>Edit Bookmark</h2>
         <form onSubmit={handleEditFormSubmit}>
-          <p>{errors}</p>
+          <p className="error">{errors}</p>
           <input
             name="edit-url"
             value={currentBookmark.title}
