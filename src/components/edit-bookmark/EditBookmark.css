@@ -45,6 +45,11 @@
   padding: 0.5rem;
 }
 
+.update {
+  color: lightseagreen;
+  text-align: center;
+}
+
 .buttons {
   display: flex;
   gap: 1rem;

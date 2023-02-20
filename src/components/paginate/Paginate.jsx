@@ -1,7 +1,6 @@
 import "./paginate.css";
 
 const Paginate = ({ bookmarks, totalPages, currentPage, setCurrentPage }) => {
-  console.log(totalPages);
   const pageNumbers = [];
 
   for (let i = 1; i <= totalPages; i++) {

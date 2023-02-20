@@ -15,6 +15,7 @@ const Bookmarks = () => {
   const [currentBookmark, setCurrentBookmark] = useState({});
   const [errors, setErrors] = useState("");
   const [isEditing, setIsEditing] = useState(false);
+  const [updated, setUpdated] = useState(false);
   const [bookmarks, setBookmarks] = useState(() => {
     const savedBookmarks = localStorage.getItem("bookmarks");
 
@@ -125,7 +126,12 @@ const Bookmarks = () => {
       return bookmark.id === id ? updatedBookmark : bookmark;
     });
 
-    setIsEditing(false);
+    setUpdated(true);
+
+    setTimeout(() => {
+      setIsEditing(false);
+      setUpdated(false);
+    }, "1000");
 
     setBookmarks(updatedItem);
 
@@ -136,6 +142,7 @@ const Bookmarks = () => {
 
   const handCancelEdit = () => {
     setIsEditing(false);
+
     setErrors("");
     const body = document.querySelector("body");
 
@@ -182,6 +189,7 @@ const Bookmarks = () => {
                   handleEditTitleChange={handleEditTitleChange}
                   currentBookmark={currentBookmark}
                   errors={errors}
+                  updated={updated}
                 />
               ) : (
                 <SingleBookmark
