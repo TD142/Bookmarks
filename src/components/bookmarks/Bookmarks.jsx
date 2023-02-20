@@ -95,12 +95,15 @@ const Bookmarks = () => {
     body.classList.add("body--hidden");
   };
 
-  const handleDeleteClick = () => {
-    const updatedBookmarks = bookmarks.filter(
-      (bookmark, index) => (bookmark.id = index)
+  const handleDeleteClick = (id) => {
+    const filteredBookmarks = bookmarks.filter(
+      (bookmark) => bookmark.id !== id
     );
 
-    setBookmarks(updatedBookmarks);
+    if (filteredBookmarks.length) {
+      filteredBookmarks.forEach((bookmark, index) => (bookmark.id = index));
+    }
+    setBookmarks(filteredBookmarks);
   };
 
   function handleEditFormSubmit(event) {

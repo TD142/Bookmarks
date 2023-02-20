@@ -16,7 +16,13 @@ const SingleBookmark = ({ bookmark, handleEditClick, handleDeleteClick }) => {
       >
         Edit
       </button>
-      <button onClick={handleDeleteClick}>X</button>
+      <button
+        onClick={() => {
+          handleDeleteClick(bookmark.id);
+        }}
+      >
+        X
+      </button>
     </div>
   );
 };
