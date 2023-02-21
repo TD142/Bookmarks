@@ -7,8 +7,9 @@
 
 .single-bookmark p {
   line-break: anywhere;
-  max-width: 8rem;
+  max-width: 5rem;
   margin: 0;
+  flex: 1;
 }
 
 .single-bookmark img {
@@ -44,5 +45,9 @@
 
   .single-bookmark__container {
     margin-bottom: 0;
+  }
+
+  .single-bookmark__container p {
+    max-width: 8rem;
   }
 }

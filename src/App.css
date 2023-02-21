@@ -68,8 +68,10 @@ h2 {
 a {
   color: white;
   min-width: 3rem;
+  display: block;
   white-space: nowrap;
   text-overflow: ellipsis;
+  overflow: hidden;
 }
 input {
   display: block;
