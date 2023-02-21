@@ -1,3 +1,4 @@
+import React from "react";
 import "./paginate.css";
 
 interface props {
@@ -13,8 +14,8 @@ const Paginate = ({
   currentPage,
   setCurrentPage,
 }: props) => {
-  const pageNumbers = [];
-
+  const pageNumbers: number[] = [];
+  // Adding page numbers to array to map over
   for (let i = 1; i <= totalPages; i++) {
     pageNumbers.push(i);
   }
@@ -22,6 +23,7 @@ const Paginate = ({
   return (
     <div className="pagination">
       <p
+        // only display page change if there's a previous page to go back to or there's enough bookmarks for a second page
         className={
           currentPage > 1 && bookmarks.length > 20
             ? "pagination__text"
@@ -43,6 +45,7 @@ const Paginate = ({
               window.scrollTo(0, 0);
             }}
             className={`pagination__list__item ${
+              // Highlight current page if numbers match
               number === currentPage && "pagination__list__item--highlight"
             }`}
             key={number}
@@ -53,6 +56,7 @@ const Paginate = ({
       </ul>
 
       <p
+        // only show if not on the final page and there's enough bookmarks for more than one page.
         className={
           currentPage < totalPages && bookmarks.length > 20
             ? "pagination__text"

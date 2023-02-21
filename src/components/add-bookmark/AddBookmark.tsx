@@ -24,6 +24,7 @@ const AddBookmark = ({
 }: props) => {
   return (
     <div className="add-bookmark">
+      {/* conditionally show errors or success message */}
       {errors && <p className="error">{errors}</p>}
       {added && <p className="added">Bookmark added!</p>}
       <form className="form" onSubmit={handleFormSubmit}>

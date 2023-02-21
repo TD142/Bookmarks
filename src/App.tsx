@@ -1,3 +1,4 @@
+import React from "react";
 import "./App.css";
 import Bookmarks from "./components/bookmarks/Bookmarks";
 

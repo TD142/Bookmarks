@@ -24,6 +24,7 @@ const EditBookmark = ({
     <div className="edit-bookmark">
       <div className="edit-single-bookmark">
         <h2>Edit Bookmark</h2>
+        {/* conditionally render update message */}
         {updated && <p className="update">Bookmark updated!</p>}
         <form onSubmit={handleEditFormSubmit}>
           <p className="error">{errors}</p>

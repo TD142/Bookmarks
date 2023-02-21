@@ -36,6 +36,7 @@ const Bookmarks = () => {
   // whether updated bookmark message is deplayed
   const [bookmarks, setBookmarks] = useState<Bookmark[]>(() => {
     const savedBookmarks = localStorage.getItem("bookmarks");
+
     // checking for local storage items
     if (savedBookmarks) {
       return JSON.parse(savedBookmarks);
@@ -81,13 +82,18 @@ const Bookmarks = () => {
 
   const handleFormSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    // clearing any previous authentication messages.
     setAdded(false);
     setErrors("");
 
+    // only submit if the url form holds a value.
     if (urlInputValue.length) {
+      // use helper constructor function to check if valid http or https request.
       if (isValidHttpUrl(urlInputValue)) {
         await fetch(urlInputValue, { mode: "no-cors" })
+          // send request to server, if response received, the website is live. Disable cors to allow opaque cross origin response.
           .then((response) => {
+            // update state with new bookmark.
             setBookmarks((prevBookmarks) => [
               ...prevBookmarks,
               {
@@ -96,39 +102,51 @@ const Bookmarks = () => {
                 url: urlInputValue,
               },
             ]);
+            // clear form values and set added to true to display success message.
             seturlInputValue("");
             setTitleInputValue("");
             setAdded(true);
           })
+
           .catch((err) => {
+            // no response from the server website is not live.
             setErrors("Not a live website!");
           });
       } else {
+        // if fails constructor test.
         setErrors("Not a valid url!");
       }
     } else {
-      setErrors("Empty bookmark!");
+      // if no url input value
+      setErrors("Empty url!");
     }
   };
 
   const handleEditClick = (bookmark: Bookmark) => {
+    // getting bookmark details and setting in state for edit. Clearing any errors and then scrolling to top of screen where error page is set.
     setCurrentBookmark(bookmark);
+    // alter display
     setIsEditing(true);
     setErrors("");
+    // save previous position prior to clicking
     setScrollPosition(window.scrollY);
     window.scrollTo(0, 0);
+    // disable scroll for absoloute position edit component.
     const body = document.querySelector("body") as HTMLBodyElement;
     body.classList.add("body--hidden");
   };
 
   const handleDeleteClick = (id: number) => {
+    // remove bookmark using passed id.
     const filteredBookmarks = bookmarks.filter(
       (bookmark) => bookmark.id !== id
     );
-
+    // updated id's so id is relative to index and there's no missing numbers
     if (filteredBookmarks.length) {
-      filteredBookmarks.forEach((bookmark, index) => (bookmark.id = index));
+      filteredBookmarks.forEach((bookmark, index) => (bookmark.id = index + 1));
     }
+
+    // update state.
     setBookmarks(filteredBookmarks);
   };
 
@@ -136,12 +154,12 @@ const Bookmarks = () => {
     event.preventDefault();
 
     setErrors("");
-
+    // same proccess as adding but with an update function in the resolve
     if (currentBookmark.url) {
       if (isValidHttpUrl(currentBookmark.url)) {
         fetch(currentBookmark.url, { mode: "no-cors" })
           .then((resolve) => {
-            handleUpdateBookMark(currentBookmark.id, currentBookmark);
+            handleUpdateBookMark(currentBookmark);
           })
           .catch((err) => {
             setErrors("Not a live website!");
@@ -154,16 +172,19 @@ const Bookmarks = () => {
     }
   }
 
-  const handleUpdateBookMark = (
-    id: number,
-    updatedBookmark: { id: number; title: string; url: string }
-  ) => {
+  const handleUpdateBookMark = (updatedBookmark: {
+    id: number;
+    title: string;
+    url: string;
+  }) => {
+    // copy the bookmarks whilst updating the edited bookmark
+
     const updatedItem = bookmarks.map((bookmark) => {
-      return bookmark.id === id ? updatedBookmark : bookmark;
+      return bookmark.id === currentBookmark.id ? updatedBookmark : bookmark;
     });
-
+    // Alter display to all bookmarks
     setUpdated(true);
-
+    // slight delay for update message to show, and then scroll to previous position when clicking edit.
     setTimeout(() => {
       setIsEditing(false);
       setUpdated(false);
@@ -177,7 +198,9 @@ const Bookmarks = () => {
   };
 
   const handleCancelEdit = () => {
+    // change display
     setIsEditing(false);
+    // clear any errors on display.
     setErrors("");
     const body = document.querySelector("body") as HTMLBodyElement;
     body.classList.remove("body--hidden");
@@ -186,18 +209,22 @@ const Bookmarks = () => {
 
   const clearBookmarks = (event: React.FormEvent) => {
     event.preventDefault();
+    // setting bookmarks to empty array to clear them.
     setBookmarks([]);
   };
 
-  const lastBookmarkIndex = currentPage * bookmarksPerPage;
+  // last bookmark on current page index.
 
+  const lastBookmarkIndex = currentPage * bookmarksPerPage;
+  // first bookmark on current page index.
   const firstBookmarkIndex = lastBookmarkIndex - bookmarksPerPage;
 
+  // copying from first index up until last.
   const currentBookmarks = bookmarks.slice(
     firstBookmarkIndex,
     lastBookmarkIndex
   );
-
+  // get total pages, rounding up if odd.
   const totalPages = Math.ceil(bookmarks.length / bookmarksPerPage);
 
   return (
@@ -217,6 +244,7 @@ const Bookmarks = () => {
         {currentBookmarks.map((bookmark) => {
           return (
             <div key={bookmark.id}>
+              {/* conditional rendering */}
               {isEditing && currentBookmark.id === bookmark.id ? (
                 <EditBookmark
                   handleEditFormSubmit={handleEditFormSubmit}

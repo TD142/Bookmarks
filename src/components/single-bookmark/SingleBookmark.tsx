@@ -2,7 +2,21 @@ import React from "react";
 import BookmarkImg from "../../assets/images/bookmark.png";
 import "./single-bookmark.css";
 
-const SingleBookmark = ({ bookmark, handleEditClick, handleDeleteClick }) => {
+interface props {
+  bookmark: { id: number; title: string; url: string };
+  handleEditClick: (bookmark: {
+    id: number;
+    title: string;
+    url: string;
+  }) => void;
+  handleDeleteClick: (id: number) => void;
+}
+
+function SingleBookmark({
+  bookmark,
+  handleEditClick,
+  handleDeleteClick,
+}: props) {
   return (
     <div className="single-bookmark">
       <img src={BookmarkImg} alt="bookmark" />
@@ -25,6 +39,6 @@ const SingleBookmark = ({ bookmark, handleEditClick, handleDeleteClick }) => {
       </button>
     </div>
   );
-};
+}
 
 export default SingleBookmark;
