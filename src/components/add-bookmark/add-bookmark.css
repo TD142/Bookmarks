@@ -1,12 +1,18 @@
-@keyframes fade-in {
+@keyframes fade-out {
   0% {
-    opacity: 0;
-
-    top: 20px;
+    opacity: 1;
+    max-height: 1;
   }
-
   50% {
     opacity: 1;
+  }
+
+  99% {
+    max-height: fit-content;
+  }
+  100% {
+    opacity: 0;
+    max-height: 0;
   }
 }
 
@@ -33,4 +39,6 @@
 .added {
   text-align: center;
   color: lightseagreen;
+  animation: fade-out 2s linear;
+  animation-fill-mode: forwards;
 }

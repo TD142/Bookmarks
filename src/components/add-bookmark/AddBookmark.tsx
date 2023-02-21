@@ -1,6 +1,17 @@
 import React from "react";
 import "./add-bookmark.css";
 
+interface props {
+  handleFormSubmit: (event: React.FormEvent) => void;
+  clearBookmarks: (event: React.FormEvent) => void;
+  handleTitleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleUrlInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  titleInputValue: string;
+  urlInputValue: string;
+  errors: string;
+  added: boolean;
+}
+
 const AddBookmark = ({
   handleFormSubmit,
   titleInputValue,
@@ -10,7 +21,7 @@ const AddBookmark = ({
   errors,
   clearBookmarks,
   added,
-}) => {
+}: props) => {
   return (
     <div className="add-bookmark">
       {errors && <p className="error">{errors}</p>}

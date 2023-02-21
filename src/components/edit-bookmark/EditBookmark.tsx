@@ -1,15 +1,25 @@
 import React from "react";
 import "./EditBookmark.css";
 
+interface props {
+  handleEditFormSubmit: (event: React.FormEvent) => void;
+  handleEditTitleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleEditUrlChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleCancelEdit: () => void;
+  errors: string;
+  currentBookmark: { id?: number; title?: string; url?: string };
+  updated: boolean;
+}
+
 const EditBookmark = ({
   handleEditFormSubmit,
-  errors,
   handleEditTitleChange,
-  currentBookmark,
   handleEditUrlChange,
   handleCancelEdit,
+  errors,
+  currentBookmark,
   updated,
-}) => {
+}: props) => {
   return (
     <div className="edit-bookmark">
       <div className="edit-single-bookmark">

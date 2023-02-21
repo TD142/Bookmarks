@@ -8,49 +8,78 @@ import SingleBookmark from "../single-bookmark/SingleBookmark";
 import "./bookmarks.css";
 
 const Bookmarks = () => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [bookmarksPerPage] = useState(20);
-  const [urlInputValue, seturlInputValue] = useState("");
-  const [titleInputValue, setTitleInputValue] = useState("");
-  const [currentBookmark, setCurrentBookmark] = useState({});
-  const [errors, setErrors] = useState("");
-  const [isEditing, setIsEditing] = useState(false);
-  const [added, setAdded] = useState(false);
-  const [updated, setUpdated] = useState(false);
-  const [bookmarks, setBookmarks] = useState(() => {
-    const savedBookmarks = localStorage.getItem("bookmarks");
+  interface Bookmark {
+    id: number;
+    title: string;
+    url: string;
+  }
 
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  // page number
+  const [bookmarksPerPage] = useState<number>(20);
+  // how many items on page
+  const [urlInputValue, seturlInputValue] = useState<string>("");
+  const [titleInputValue, setTitleInputValue] = useState<string>("");
+  const [currentBookmark, setCurrentBookmark] = useState<Bookmark>({
+    id: 0,
+    title: "",
+    url: "",
+  });
+  // single book mark for editing
+  const [errors, setErrors] = useState<string>("");
+  // authentication errors
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  // to display all bookmarks or edited book marks
+  const [added, setAdded] = useState<boolean>(false);
+  // whether bookmark added message is displayed
+  const [updated, setUpdated] = useState<boolean>(false);
+  // whether updated bookmark message is deplayed
+  const [bookmarks, setBookmarks] = useState<Bookmark[]>(() => {
+    const savedBookmarks = localStorage.getItem("bookmarks");
+    // checking for local storage items
     if (savedBookmarks) {
       return JSON.parse(savedBookmarks);
     } else {
       return [];
     }
   });
-
-  const [scrollPosition, setScrollPosition] = useState(null);
+  // all book marks
+  const [scrollPosition, setScrollPosition] = useState<number>(0);
+  // previous scroll position stored when exiting edit book mark
 
   useEffect(() => {
     localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+    // every time there is a change to book marks they are persisted in local storage.
   }, [bookmarks]);
 
-  const handleUrlInputChange = (event) => {
+  // input values held in state
+
+  const handleUrlInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     seturlInputValue(event.target.value);
     setErrors("");
   };
-  console.log(window.scrollY);
-  const handleTitleInputChange = (event) => {
+
+  const handleTitleInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setTitleInputValue(event.target.value);
   };
-
-  const handleEditTitleChange = (event) => {
-    setCurrentBookmark({ ...currentBookmark, title: event.target.value });
+  // taking previous state values and updating title or url
+  const handleEditTitleChange = (event: React.FormEvent) => {
+    setCurrentBookmark((prevBookmark) => ({
+      ...prevBookmark,
+      title: (event.target as HTMLInputElement).value,
+    }));
   };
 
-  const handleEditUrlChange = (event) => {
-    setCurrentBookmark({ ...currentBookmark, url: event.target.value });
+  const handleEditUrlChange = (event: React.FormEvent) => {
+    setCurrentBookmark((prevBookmark) => ({
+      ...prevBookmark,
+      url: (event.target as HTMLInputElement).value,
+    }));
   };
 
-  const handleFormSubmit = async (event) => {
+  const handleFormSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setAdded(false);
     setErrors("");
@@ -65,15 +94,11 @@ const Bookmarks = () => {
                 id: bookmarks.length + 1,
                 title: titleInputValue,
                 url: urlInputValue,
-                isEditing: false,
               },
             ]);
             seturlInputValue("");
             setTitleInputValue("");
             setAdded(true);
-            setTimeout(() => {
-              setAdded(false);
-            }, "1500");
           })
           .catch((err) => {
             setErrors("Not a live website!");
@@ -86,17 +111,17 @@ const Bookmarks = () => {
     }
   };
 
-  const handleEditClick = (bookmark) => {
+  const handleEditClick = (bookmark: Bookmark) => {
     setCurrentBookmark(bookmark);
     setIsEditing(true);
     setErrors("");
     setScrollPosition(window.scrollY);
     window.scrollTo(0, 0);
-    const body = document.querySelector("body");
+    const body = document.querySelector("body") as HTMLBodyElement;
     body.classList.add("body--hidden");
   };
 
-  const handleDeleteClick = (id) => {
+  const handleDeleteClick = (id: number) => {
     const filteredBookmarks = bookmarks.filter(
       (bookmark) => bookmark.id !== id
     );
@@ -107,7 +132,7 @@ const Bookmarks = () => {
     setBookmarks(filteredBookmarks);
   };
 
-  function handleEditFormSubmit(event) {
+  function handleEditFormSubmit(event: React.FormEvent) {
     event.preventDefault();
 
     setErrors("");
@@ -129,7 +154,10 @@ const Bookmarks = () => {
     }
   }
 
-  const handleUpdateBookMark = (id, updatedBookmark) => {
+  const handleUpdateBookMark = (
+    id: number,
+    updatedBookmark: { id: number; title: string; url: string }
+  ) => {
     const updatedItem = bookmarks.map((bookmark) => {
       return bookmark.id === id ? updatedBookmark : bookmark;
     });
@@ -140,23 +168,23 @@ const Bookmarks = () => {
       setIsEditing(false);
       setUpdated(false);
       window.scrollTo(0, scrollPosition);
-    }, "1000");
+    }, 1000);
 
     setBookmarks(updatedItem);
 
-    const body = document.querySelector("body");
+    const body = document.querySelector("body") as HTMLBodyElement;
     body.classList.remove("body--hidden");
   };
 
-  const handCancelEdit = () => {
+  const handleCancelEdit = () => {
     setIsEditing(false);
     setErrors("");
-    const body = document.querySelector("body");
+    const body = document.querySelector("body") as HTMLBodyElement;
     body.classList.remove("body--hidden");
     window.scrollTo(0, scrollPosition);
   };
 
-  const clearBookmarks = (event) => {
+  const clearBookmarks = (event: React.FormEvent) => {
     event.preventDefault();
     setBookmarks([]);
   };
@@ -193,7 +221,7 @@ const Bookmarks = () => {
                 <EditBookmark
                   handleEditFormSubmit={handleEditFormSubmit}
                   handleEditUrlChange={handleEditUrlChange}
-                  handleCancelEdit={handCancelEdit}
+                  handleCancelEdit={handleCancelEdit}
                   handleEditTitleChange={handleEditTitleChange}
                   currentBookmark={currentBookmark}
                   errors={errors}

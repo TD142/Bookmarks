@@ -1,6 +1,18 @@
 import "./paginate.css";
 
-const Paginate = ({ bookmarks, totalPages, currentPage, setCurrentPage }) => {
+interface props {
+  bookmarks: { id: number; title: string; url: string }[];
+  totalPages: number;
+  currentPage: number;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+}
+
+const Paginate = ({
+  bookmarks,
+  totalPages,
+  currentPage,
+  setCurrentPage,
+}: props) => {
   const pageNumbers = [];
 
   for (let i = 1; i <= totalPages; i++) {
