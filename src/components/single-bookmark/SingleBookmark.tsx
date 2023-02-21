@@ -19,24 +19,27 @@ function SingleBookmark({
 }: props) {
   return (
     <div className="single-bookmark">
-      <img src={BookmarkImg} alt="bookmark" />
-      {bookmark.title && <p>{bookmark.title.toUpperCase()}:</p>}
-      <a href={bookmark.url}>{bookmark.url}</a>
-
-      <button
-        onClick={() => {
-          handleEditClick(bookmark);
-        }}
-      >
-        Edit
-      </button>
-      <button
-        onClick={() => {
-          handleDeleteClick(bookmark.id);
-        }}
-      >
-        X
-      </button>
+      <div className="single-bookmark__container">
+        <img src={BookmarkImg} alt="bookmark" />
+        {bookmark.title && <p>{bookmark.title.toUpperCase()}:</p>}
+        <a href={bookmark.url}>{bookmark.url}</a>
+      </div>
+      <div className="single-bookmark__wrapper">
+        <button
+          onClick={() => {
+            handleEditClick(bookmark);
+          }}
+        >
+          Edit
+        </button>
+        <button
+          onClick={() => {
+            handleDeleteClick(bookmark.id);
+          }}
+        >
+          X
+        </button>
+      </div>
     </div>
   );
 }

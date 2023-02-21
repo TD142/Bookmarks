@@ -67,7 +67,9 @@ h2 {
 
 a {
   color: white;
-  line-break: anywhere;
+  min-width: 3rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 input {
   display: block;
