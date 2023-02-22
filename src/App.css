@@ -6,6 +6,11 @@
   box-sizing: border-box;
 }
 
+.root {
+  height: 100vh;
+  overflow: hidden;
+}
+
 body {
   color: white;
   background: black;
@@ -25,13 +30,8 @@ body {
   }
 }
 
-.body--hidden {
-  overflow: hidden;
-}
-
 .app {
   margin: 1rem;
-  position: relative;
 }
 
 @media (min-width: 1000px) {

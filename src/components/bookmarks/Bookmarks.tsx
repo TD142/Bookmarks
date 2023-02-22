@@ -132,8 +132,8 @@ const Bookmarks = () => {
     setScrollPosition(window.scrollY);
     window.scrollTo(0, 0);
     // disable scroll for absoloute position edit component.
-    const body = document.querySelector("body") as HTMLBodyElement;
-    body.classList.add("body--hidden");
+    const root = document.getElementById("root") as HTMLDivElement;
+    root.classList.add("root");
   };
 
   const handleDeleteClick = (id: number) => {
@@ -193,8 +193,8 @@ const Bookmarks = () => {
 
     setBookmarks(updatedItem);
 
-    const body = document.querySelector("body") as HTMLBodyElement;
-    body.classList.remove("body--hidden");
+    const root = document.getElementById("root") as HTMLDivElement;
+    root.classList.remove("root");
   };
 
   const handleCancelEdit = () => {
@@ -202,8 +202,8 @@ const Bookmarks = () => {
     setIsEditing(false);
     // clear any errors on display.
     setErrors("");
-    const body = document.querySelector("body") as HTMLBodyElement;
-    body.classList.remove("body--hidden");
+    const root = document.getElementById("root") as HTMLBodyElement;
+    root.classList.remove("root");
     window.scrollTo(0, scrollPosition);
   };
 
