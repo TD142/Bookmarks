@@ -24,7 +24,7 @@
 }
 
 .edit-single-bookmark {
-  width: 80%;
+  width: 50%;
   border: 1px solid white;
   padding: 1.5rem;
   animation: fade-in linear 1s;
@@ -57,4 +57,10 @@
 }
 .buttons > button {
   width: 50%;
+}
+
+@media (min-width: 1000px) {
+  .edit-single-bookmark {
+    width: 40rem;
+  }
 }
