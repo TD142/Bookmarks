@@ -9,12 +9,12 @@
   line-break: anywhere;
   max-width: 5rem;
   margin: 0;
-  flex: 1;
 }
 
 .single-bookmark img {
   width: 1.5rem;
   display: block;
+  margin-right: auto;
 }
 
 .single-bookmark a {
@@ -23,6 +23,7 @@
 
 .single-bookmark__container {
   display: flex;
+  flex: 1;
   gap: 1rem;
   justify-content: space-between;
   align-items: center;
