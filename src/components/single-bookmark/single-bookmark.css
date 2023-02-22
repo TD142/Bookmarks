@@ -5,6 +5,10 @@
   margin-bottom: 2rem;
 }
 
+.inner-container:nth-last-of-type(1) > .single-bookmark {
+  margin-bottom: 0;
+}
+
 .single-bookmark p {
   line-break: anywhere;
   max-width: 5rem;
@@ -19,6 +23,10 @@
 
 .single-bookmark a {
   flex: 1;
+}
+
+.single-bookmark button:nth-of-type(1) {
+  width: 30%;
 }
 
 .single-bookmark__container {
@@ -50,5 +58,9 @@
 
   .single-bookmark__container p {
     max-width: 8rem;
+  }
+
+  .single-bookmark button:nth-of-type(1) {
+    width: fit-content;
   }
 }

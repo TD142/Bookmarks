@@ -14,16 +14,16 @@ interface props {
 
 const AddBookmark = ({
   handleFormSubmit,
-  titleInputValue,
-  handleTitleInputChange,
-  urlInputValue,
-  handleUrlInputChange,
-  errors,
   clearBookmarks,
+  handleTitleInputChange,
+  handleUrlInputChange,
+  titleInputValue,
+  urlInputValue,
+  errors,
   added,
 }: props) => {
   return (
-    <div className="add-bookmark">
+    <section className="add-bookmark">
       {/* conditionally show errors or success message */}
       {errors && <p className="error">{errors}</p>}
       {added && <p className="added">Bookmark added!</p>}
@@ -47,7 +47,7 @@ const AddBookmark = ({
           <button onClick={clearBookmarks}>Clear Bookmarks</button>
         </div>
       </form>
-    </div>
+    </section>
   );
 };
 

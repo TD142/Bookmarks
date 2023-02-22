@@ -94,6 +94,7 @@ const Bookmarks = () => {
           // send request to server, if response received, the website is live. Disable cors to allow opaque cross origin response.
           .then((response) => {
             // update state with new bookmark.
+
             setBookmarks((prevBookmarks) => [
               ...prevBookmarks,
               {
@@ -109,6 +110,7 @@ const Bookmarks = () => {
           })
 
           .catch((err) => {
+            console.log(err);
             // no response from the server website is not live.
             setErrors("Not a live website!");
           });
@@ -231,19 +233,19 @@ const Bookmarks = () => {
     <main className="bookmarks">
       <AddBookmark
         handleFormSubmit={handleFormSubmit}
-        titleInputValue={titleInputValue}
         handleTitleInputChange={handleTitleInputChange}
         handleUrlInputChange={handleUrlInputChange}
+        clearBookmarks={clearBookmarks}
+        titleInputValue={titleInputValue}
         urlInputValue={urlInputValue}
         errors={errors}
-        clearBookmarks={clearBookmarks}
         added={added}
       />
 
       <div className="container">
         {currentBookmarks.map((bookmark) => {
           return (
-            <div key={bookmark.id}>
+            <div className="inner-container" key={bookmark.id}>
               {/* conditional rendering */}
               {isEditing && currentBookmark.id === bookmark.id ? (
                 <EditBookmark
@@ -268,8 +270,8 @@ const Bookmarks = () => {
       </div>
 
       <Paginate
-        bookmarks={bookmarks}
         setCurrentPage={setCurrentPage}
+        bookmarks={bookmarks}
         currentPage={currentPage}
         totalPages={totalPages}
       />
