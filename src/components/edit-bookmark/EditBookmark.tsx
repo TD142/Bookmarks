@@ -40,7 +40,9 @@ const EditBookmark = ({
           />
           <div className="buttons">
             <button type="submit">update</button>
-            <button onClick={handleCancelEdit}>Cancel</button>
+            <button type="button" onClick={handleCancelEdit}>
+              Cancel
+            </button>
           </div>
         </form>
       </div>

@@ -44,7 +44,9 @@ const AddBookmark = ({
         />
         <div className="buttons">
           <button type="submit">Add</button>
-          <button onClick={clearBookmarks}>Clear Bookmarks</button>
+          <button type="button" onClick={clearBookmarks}>
+            Clear Bookmarks
+          </button>
         </div>
       </form>
     </section>
