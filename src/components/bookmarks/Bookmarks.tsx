@@ -88,7 +88,7 @@ const Bookmarks = () => {
 
     // only submit if the URL form holds a value
     if (urlInputValue.length) {
-      // use helper constructor function to check if valid http or https request
+      // use helper constructor function to check if valid HTTP or HTTPS request
       if (isValidHttpUrl(urlInputValue)) {
         await fetch(urlInputValue, { mode: "no-cors" })
           // send request to server, if response received, the website is live. Disable cors to allow opaque cross origin response
