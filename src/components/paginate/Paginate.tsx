@@ -56,7 +56,7 @@ const Paginate = ({
       </ul>
 
       <p
-        // only show if not on the final page and there's enough bookmarks for more than one page.
+        // only show if not on the final page and there's enough bookmarks for more than one page
         className={
           currentPage < totalPages && bookmarks.length > 20
             ? "pagination__text"

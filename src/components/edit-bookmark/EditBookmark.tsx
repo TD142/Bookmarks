@@ -7,7 +7,7 @@ interface props {
   handleEditUrlChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleCancelEdit: () => void;
   errors: string;
-  currentBookmark: { id?: number; title?: string; url?: string };
+  currentBookmark: { id: number; title: string; url: string };
   updated: boolean;
 }
 
