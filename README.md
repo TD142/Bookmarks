@@ -2,7 +2,7 @@
 
 Bookmarks app showcasing front-end based CRUD techniques, form validation, pagination, and persisting data.
 
-Live version of the site available at <a href="https://bookmarks-khaki.vercel.app/">https://bookmarks-khaki.vercel.app/.</a>
+Live version of the site available at <a href="https://bookmarks-td.vercel.app//">https://bookmarks-td.vercel.app/.</a>
 
 ## Available Scripts
 
