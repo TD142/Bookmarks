@@ -21,7 +21,7 @@ function SingleBookmark({
     <section className="single-bookmark">
       <div className="single-bookmark__container">
         <img src={BookmarkImg} alt="bookmark" />
-        {bookmark.title && <p>{bookmark.title.toUpperCase()}:</p>}
+        {bookmark.title && <p>{bookmark.title.toUpperCase()}</p>}
         <a href={bookmark.url} target="_blank">
           {bookmark.url}
         </a>
