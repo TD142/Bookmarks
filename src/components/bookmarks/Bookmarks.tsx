@@ -90,7 +90,11 @@ const Bookmarks = () => {
     if (urlInputValue.length) {
       // use helper constructor function to check if valid HTTP or HTTPS request
       if (isValidHttpUrl(urlInputValue)) {
-        await fetch(urlInputValue, { mode: "no-cors" })
+        // construct a new URL to and change protocol to HTTPS if HTTP has been entered. This is to avoid browser mixed content policy issues
+
+        const urlObj = new URL(urlInputValue);
+        urlObj.protocol = "https:";
+        await fetch(urlObj.toString(), { mode: "no-cors" })
           // send request to server, if response received, the website is live. Disable cors to allow opaque cross origin response
           .then((response) => {
             // update state with new bookmark
@@ -151,14 +155,17 @@ const Bookmarks = () => {
     setBookmarks(filteredBookmarks);
   };
 
-  function handleEditFormSubmit(event: React.FormEvent) {
+  const handleEditFormSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
     setErrors("");
     // same proccess as adding but with an update function in the resolve
     if (currentBookmark.url) {
       if (isValidHttpUrl(currentBookmark.url)) {
-        fetch(currentBookmark.url, { mode: "no-cors" })
+        const urlObj = new URL(currentBookmark.url);
+        urlObj.protocol = "https:";
+        console.log(urlObj.protocol);
+        await fetch(urlObj.toString(), { mode: "no-cors" })
           .then((resolve) => {
             handleUpdateBookMark(currentBookmark);
           })
@@ -171,7 +178,7 @@ const Bookmarks = () => {
     } else {
       setErrors("Empty bookmark!");
     }
-  }
+  };
 
   const handleUpdateBookMark = (updatedBookmark: {
     id: number;
