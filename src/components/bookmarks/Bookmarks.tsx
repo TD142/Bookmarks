@@ -90,7 +90,7 @@ const Bookmarks = () => {
     if (urlInputValue.length) {
       // use helper constructor function to check if valid HTTP or HTTPS request
       if (isValidHttpUrl(urlInputValue)) {
-        // construct a new URL to and change protocol to HTTPS if HTTP has been entered. This is to avoid browser mixed content policy issues
+        // construct a new URL and change protocol to HTTPS if HTTP has been entered. This is to avoid browser mixed content policy issues
 
         const urlObj = new URL(urlInputValue);
         urlObj.protocol = "https:";
@@ -164,7 +164,7 @@ const Bookmarks = () => {
       if (isValidHttpUrl(currentBookmark.url)) {
         const urlObj = new URL(currentBookmark.url);
         urlObj.protocol = "https:";
-        console.log(urlObj.protocol);
+
         await fetch(urlObj.toString(), { mode: "no-cors" })
           .then((resolve) => {
             handleUpdateBookMark(currentBookmark);
