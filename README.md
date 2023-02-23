@@ -1,6 +1,8 @@
 # About
 
-Bookmarks app showcasing front end based create, read, update, delete techniques form validation, pagination and persisting data. Live version of the site available at <a href="https://bookmarks-khaki.vercel.app/">https://bookmarks-khaki.vercel.app/.</a>
+Bookmarks app showcasing front-end based CRUD techniques, form validation, pagination, and persisting data.
+
+Live version of the site available at <a href="https://bookmarks-khaki.vercel.app/">https://bookmarks-khaki.vercel.app/.</a>
 
 ## Available Scripts
 
