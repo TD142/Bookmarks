@@ -12,11 +12,11 @@ interface props {
   handleDeleteClick: (id: number) => void;
 }
 
-function SingleBookmark({
+const SingleBookmark = ({
   bookmark,
   handleEditClick,
   handleDeleteClick,
-}: props) {
+}: props) => {
   return (
     <section className="single-bookmark">
       <div className="single-bookmark__container">
@@ -44,6 +44,6 @@ function SingleBookmark({
       </div>
     </section>
   );
-}
+};
 
 export default SingleBookmark;

@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import Bookmarks from "./components/bookmarks/Bookmarks";
 
-function App() {
+const App = () => {
   return (
     <div className="app">
       <header className="header">
@@ -11,6 +11,6 @@ function App() {
       <Bookmarks />
     </div>
   );
-}
+};
 
 export default App;
